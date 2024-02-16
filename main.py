@@ -1,5 +1,7 @@
 from tkinter import *
 import math
+import pygame
+
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -33,12 +35,9 @@ def start_timer():
     global reps
     global state
 
-    # work_sec = WORK_MIN * 60
-    work_sec = 25
-    # short_break_sec = SHORT_BREAK_MIN * 60
-    short_break_sec = 5
-    # long_break_sec = LONG_BREAK_MIN * 60
-    long_break_sec = 15
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
 
     # If it's the 8th rep:
     if reps % 8 == 0:
@@ -85,6 +84,7 @@ def count_down(count):
                 check_marks.config(text=current_text+"✔ ")
             else:
                 check_marks.config(text=current_text+"✔")
+        pygame.mixer.music.play()
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -99,7 +99,7 @@ tomato_img = PhotoImage(file="tomato.png")
 canvas.create_image(100, 112, image=tomato_img) # Half of the width and the height
 
 # Counter text
-timer_text = canvas.create_text(100, 130, text="00:25", font=(FONT_NAME, 35, "bold"), fill=WHITE)
+timer_text = canvas.create_text(100, 130, text=f"{WORK_MIN}:00", font=(FONT_NAME, 35, "bold"), fill=WHITE)
 canvas.grid(column=1, row=1)
 
 # Create a Label for the current state of the App
@@ -120,6 +120,13 @@ reset_button.grid(column="2", row="2")
 # Create the check mark
 check_marks = Label(fg=GREEN, bg=YELLOW, font=(FONT_NAME, 35, "normal"))
 check_marks.grid(column=1, row=3)
+
+# pygame initialize
+pygame.init()
+
+# Load audio file
+pygame.mixer.init()
+pygame.mixer.music.load('ring-tone.mp3')
 
 
 
